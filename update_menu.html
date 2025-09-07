@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Update Menu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Manage Menu</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Menu Items Table -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price (₹)</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in menu_items %}
+                <tr>
+                    <td><img src="{{ item.image_url }}" alt="{{ item.name }}" width="60"></td>
+                    <td>{{ item.name }}</td>
+                    <td>₹{{ item.price }}</td>
+                    <td>
+                        <form action="{{ url_for('update_menu') }}" method="POST" class="d-inline">
+                            <input type="hidden" name="item_id" value="{{ item._id }}">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" class="form-control d-inline w-50">
+                            <button type="submit" name="action" value="update" class="btn btn-success btn-sm">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('update_menu') }}" method="POST" class="d-inline">
+                            <input type="hidden" name="item_id" value="{{ item._id }}">
+                            <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Add New Item Form -->
+        <!-- Add New Item Form -->
+<h3 class="mt-4">Add New Item</h3>
+<form action="{{ url_for('update_menu') }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="name" class="form-label">Item Name</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" class="form-control" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price (₹)</label>
+        <input type="number" name="price" step="0.01" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" name="quantity" min="0" class="form-control" required>
+    </div>
+
+    <!-- Image Upload Options -->
+    <div class="mb-3">
+        <label for="image_url" class="form-label">Image URL (Optional)</label>
+        <input type="text" name="image_url" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="image_file" class="form-label">Upload Image (Optional)</label>
+        <input type="file" name="image_file" class="form-control">
+    </div>
+
+    <button type="submit" name="action" value="add" class="btn btn-primary">Add Item</button>
+</form>
+
+    </div>
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-primary">Home Page</a>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

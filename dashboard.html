@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Welcome to the Food Ordering System</h2>
+    <h3>Menu</h3>
+    <ul>
+        {% for item in food_items %}
+            <li>{{ item.name }} - ${{ item.price }} <button>Add to Cart</button></li>
+        {% endfor %}
+    </ul>
+    <a href="/orders">View Orders</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>

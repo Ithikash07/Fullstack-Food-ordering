@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+</head>
+<body>
+    <h2>Your Orders</h2>
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>Order ID: {{ order._id }} - Status: {{ order.status }} 
+                    <form action="/delete_order" method="POST" style="display:inline;">
+                        <input type="hidden" name="order_id" value="{{ order._id }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+    <a href="/dashboard">Back to Dashboard</a>
+    <a href="/">Main Page</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>
